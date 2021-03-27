@@ -4,10 +4,6 @@ version: 0.1.0
 authors:
   - tiso7 <81435338+tiso7@users.noreply.github.com>
 
-targets:
-  levin:
-    main: src/levin.cr
-
 crystal: 1.0.0
 
 license: MIT

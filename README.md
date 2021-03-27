@@ -4,9 +4,21 @@ TODO: Write a description here
 
 ## Installation
 
-TODO: Write installation instructions here
+1. Add the dependency to your `shard.yml`:
+
+   ```yaml
+   dependencies:
+     levin:
+       github: your-github-user/levin
+   ```
+
+2. Run `shards install`
 
 ## Usage
+
+```crystal
+require "levin"
+```
 
 TODO: Write usage instructions here
 
