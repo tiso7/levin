@@ -1,3 +1,5 @@
+require "./unsafe.cr"
+
 PAGE_HEADER_SIZE = instance_sizeof(Page)
 
 MIN_KEYS_PER_PAGE = 2
@@ -5,17 +7,17 @@ MIN_KEYS_PER_PAGE = 2
 BRANCH_PAGE_ELEMENT_SIZE = instance_sizeof(BranchPageElement)
 LEAF_PAGE_ELEMENT_SIZE = instance_sizeof(LeafPageElement)
 
-BRANCH_PAGE_FLAG = 0x01
-LEAF_PAGE_FLAG = 0x02
-META_PAGE_FLAG = 0x04
-FREELIST_PAGE_FLAG = 0x10
+BRANCH_PAGE_FLAG = UInt16.new(0x01)
+LEAF_PAGE_FLAG = UInt16.new(0x02)
+META_PAGE_FLAG = UInt16.new(0x04)
+FREELIST_PAGE_FLAG = UInt16.new(0x10)
 
 BUCKET_LEAF_FLAG = 0x01
 
 alias PageId = UInt64
 
-class Page
-  def initialize(id : PageId, flags : Int32, count : Int32, overflow : Int32)
+struct Page
+  def initialize(id : PageId, flags : UInt16, count : UInt16, overflow : UInt32)
     @id = id
     @flags = flags
     @count = count
@@ -77,11 +79,11 @@ class Page
   #     return elems
   # }
 
-  # # dump writes n bytes of the page to STDERR as hex output.
-  # func (p *page) hexdump(n int) {
-  #     buf := unsafeByteSlice(unsafe.Pointer(p), 0, 0, n)
-  #     fmt.Fprintf(os.Stderr, "%x\n", buf)
-  # }
+  # dump writes n bytes of the page to STDERR as hex output.
+  def hexdump(n : Int64)
+    buf = unsafe_byte_slice(pointerof(@id), 0, 0, n)
+    STDERR.puts buf.hexstring
+  end
 end
 
 # TODO: This may need to be rewritten depending on needs
