@@ -26,6 +26,16 @@ TODO: Write usage instructions here
 
 TODO: Write development instructions here
 
+1. Download dependencies:
+```sh
+$ shards install
+```
+
+2. Run tests:
+```sh
+$ crystal spec [test directory/file]
+```
+
 ## Contributing
 
 1. Fork it (<https://github.com/your-github-user/levin/fork>)
