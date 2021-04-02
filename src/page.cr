@@ -163,80 +163,9 @@ end
 # 	OverflowCount int
 # }
 
-# TODO: This may need to be rewritten depending on needs
-class PageIds
-  property p : Array(PageId)
-
-  def initialize(p : Array(PageId))
-    @p = p
-  end
-
-  def len : Int
-    @p.size
-  end
-
-  def swap(i, j : Int)
-    t = @p[i]
-    @p[i] = @p[j]
-    @p[j] = t
-  end
-
-  def less(i, j : Int) : Bool
-    @p[i] < @p[j]
-  end
-
-  # TODO: Finish merge
-  # merge returns the sorted union of a and b.
+class PageIds < Array(PageId)
+  # merge returns the sorted union of self and b
   def merge(b : PageIds) : PageIds
-    # # Return the opposite slice if one is nil.
-    # if sizeof(@p) == 0
-    #   b
-    # elsif sizeof(b.p) == 0
-    #   self
-    # else
-    #   merged = Array(PageId).new(self.len + b.len)
-    #   PageIds.new mergepgids(merged, self.p, b.p)
-    # end
+    (self + b).sort.unsafe_as(PageIds)
   end
 end
-
-# mergepgids copies the sorted union of a and b into dst.
-# If dst is too small, it panics.
-# def mergepgids(dst, a, b)
-#   if sizeof(dst) < sizeof(a) + sizeof(b)
-# 		raise "mergepgids bad len #{sizeof(dst)} < #{sizeof(a)} + #{sizeof(b)}"
-#   end
-# 	# Copy in the opposite slice if one is nil.
-# 	if a.len == 0
-# 		return b.clone
-#   end
-# 	if b.len == 0 {
-# 		return a.clone
-#   end
-
-  # TODO: Finish merging
-	# # Merged will hold all elements from both lists.
-	# merged := dst[:0]
-
-	# # Assign lead to the slice with a lower starting value, follow to the higher value.
-	# lead, follow := a, b
-	# if b[0] < a[0] {
-	# 	lead, follow = b, a
-	# }
-
-	# # Continue while there are elements in the lead.
-	# for len(lead) > 0 {
-	# 	# Merge largest prefix of lead that is ahead of follow[0].
-	# 	n := sort.Search(len(lead), func(i int) bool { return lead[i] > follow[0] })
-	# 	merged = append(merged, lead[:n]...)
-	# 	if n >= len(lead) {
-	# 		break
-	# 	}
-
-	# 	# Swap lead and follow.
-	# 	lead, follow = follow, lead[n:]
-	# }
-
-	# # Append what's left in follow.
-	# _ = append(merged, follow...)
-# end

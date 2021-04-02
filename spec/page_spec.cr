@@ -34,42 +34,20 @@ describe Page do
   end
 end
 
-# func TestPgids_merge(t *testing.T) {
-# 	a := pgids{4, 5, 6, 10, 11, 12, 13, 27}
-# 	b := pgids{1, 3, 8, 9, 25, 30}
-# 	c := a.merge(b)
-# 	if !reflect.DeepEqual(c, pgids{1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 25, 27, 30}) {
-# 		t.Errorf("mismatch: %v", c)
-# 	}
+describe PageIds do
+  describe "#merge" do
+    it "correctly merge and sort the 2 lists of page ids" do
+      a = PageIds{4, 5, 6, 10, 11, 12, 13, 27}
+      b = PageIds{1, 3, 8, 9, 25, 30}
+      c = a.merge(b)
+      c.should eq PageIds{1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 25, 27, 30}
 
-# 	a = pgids{4, 5, 6, 10, 11, 12, 13, 27, 35, 36}
-# 	b = pgids{8, 9, 25, 30}
-# 	c = a.merge(b)
-# 	if !reflect.DeepEqual(c, pgids{4, 5, 6, 8, 9, 10, 11, 12, 13, 25, 27, 30, 35, 36}) {
-# 		t.Errorf("mismatch: %v", c)
-# 	}
-# }
+      a = PageIds{4, 5, 6, 10, 11, 12, 13, 27, 35, 36}
+      b = PageIds{8, 9, 25, 30}
+      c = a.merge(b)
+      c.should eq PageIds{4, 5, 6, 8, 9, 10, 11, 12, 13, 25, 27, 30, 35, 36}
+    end
+  end
+end
 
-# func TestPgids_merge_quick(t *testing.T) {
-# 	if err := quick.Check(func(a, b pgids) bool {
-# 		# Sort incoming lists.
-# 		sort.Sort(a)
-# 		sort.Sort(b)
-
-# 		# Merge the two lists together.
-# 		got := a.merge(b)
-
-# 		# The expected value should be the two lists combined and sorted.
-# 		exp := append(a, b...)
-# 		sort.Sort(exp)
-
-# 		if !reflect.DeepEqual(exp, got) {
-# 			t.Errorf("\nexp=%+v\ngot=%+v\n", exp, got)
-# 			return false
-# 		}
-
-# 		return true
-# 	}, nil); err != nil {
-# 		t.Fatal(err)
-# 	}
-# }
+# TODO: We should add a black box test similar to how they use quick library in bbolt
